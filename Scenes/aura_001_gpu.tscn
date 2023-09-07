@@ -1,0 +1,63 @@
+[gd_scene load_steps=9 format=3 uid="uid://pxb4gtxkpn7t"]
+
+[ext_resource type="Texture2D" uid="uid://bb3rjr73y8xtg" path="res://Textures/aura001.png" id="1_37crk"]
+[ext_resource type="Material" uid="uid://ba5v81nbdc2tg" path="res://Materials/Aura001_orizontal_GPU_mat.tres" id="2_oafe2"]
+[ext_resource type="Texture2D" uid="uid://8pa2wk2kn5hc" path="res://Textures/aura001_v.png" id="3_gt5tq"]
+[ext_resource type="Material" uid="uid://kyed4rewoj65" path="res://Materials/Aura001_vertical_GPU_mat.tres" id="4_qtrc2"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_da2mr"]
+transparency = 1
+blend_mode = 1
+cull_mode = 2
+depth_draw_mode = 1
+albedo_texture = ExtResource("1_37crk")
+
+[sub_resource type="QuadMesh" id="QuadMesh_fdck1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rhftb"]
+transparency = 1
+blend_mode = 1
+cull_mode = 2
+albedo_color = Color(1, 1, 1, 0.466667)
+albedo_texture = ExtResource("3_gt5tq")
+
+[sub_resource type="QuadMesh" id="QuadMesh_4vjab"]
+size = Vector2(0.1, 0.5)
+
+[node name="Aura001_GPU" type="Node3D"]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 4
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(1152, 648)
+size_2d_override_stretch = true
+render_target_update_mode = 4
+
+[node name="OmniLight3D" type="OmniLight3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 0.863765, 0.503895, 0, -0.503895, 0.863765, 0, 0.978639, 1.37969)
+
+[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 0.863765, 0.503895, 0, -0.503895, 0.863765, 0, 1.48517, 1.5081)
+keep_aspect = 0
+
+[node name="GPUParticles3D_orizontal" type="GPUParticles3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_da2mr")
+transparency = 1.0
+amount = 1
+process_material = ExtResource("2_oafe2")
+draw_pass_1 = SubResource("QuadMesh_fdck1")
+
+[node name="GPUParticles3D_vertical" type="GPUParticles3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.19538, 0)
+material_override = SubResource("StandardMaterial3D_rhftb")
+process_material = ExtResource("4_qtrc2")
+draw_pass_1 = SubResource("QuadMesh_4vjab")
