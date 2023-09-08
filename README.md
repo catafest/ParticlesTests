@@ -1,6 +1,6 @@
 # ParticlesTests
 
-You can follow me on web with nicknames: catafest and mythcat 
+You can follow me on the web with nicknames: catafest and mythcat 
 
 ## Particles in this project :
 
