@@ -1,0 +1,85 @@
+[gd_scene load_steps=13 format=3 uid="uid://yphlcmsna3qv"]
+
+[ext_resource type="Material" uid="uid://cufeykeyxrpoo" path="res://Materials/Aura001_orizontal_CPU_mat.tres" id="1_opv8y"]
+[ext_resource type="Texture2D" uid="uid://bb3rjr73y8xtg" path="res://Textures/aura001.png" id="1_rce6r"]
+[ext_resource type="Material" uid="uid://hebcxfv1jnp2" path="res://Materials/Aura001_vertical_CPU_mat.tres" id="2_6h68y"]
+[ext_resource type="Texture2D" uid="uid://8pa2wk2kn5hc" path="res://Textures/aura001_v.png" id="2_ohmn7"]
+[ext_resource type="Material" uid="uid://ba5v81nbdc2tg" path="res://Materials/Aura001_orizontal_GPU_mat.tres" id="3_g4na3"]
+[ext_resource type="Material" uid="uid://kyed4rewoj65" path="res://Materials/Aura001_vertical_GPU_mat.tres" id="4_p3dle"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_ub74a"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_yu8ww"]
+size = Vector2(0.1, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cvipg"]
+transparency = 1
+blend_mode = 1
+cull_mode = 2
+depth_draw_mode = 1
+albedo_texture = ExtResource("1_rce6r")
+
+[sub_resource type="QuadMesh" id="QuadMesh_3tif3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pl6gd"]
+transparency = 1
+blend_mode = 1
+cull_mode = 2
+albedo_color = Color(1, 1, 1, 0.466667)
+albedo_texture = ExtResource("2_ohmn7")
+
+[sub_resource type="QuadMesh" id="QuadMesh_h43n5"]
+size = Vector2(0.1, 0.5)
+
+[node name="Aura001_CPU" type="Node3D"]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 4
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(1152, 648)
+size_2d_override_stretch = true
+render_target_update_mode = 4
+
+[node name="OmniLight3D" type="OmniLight3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 0.863765, 0.503895, 0, -0.503895, 0.863765, 0, 0.978639, 1.37969)
+
+[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 0.863765, 0.503895, 0, -0.503895, 0.863765, 0, 1.48517, 1.5081)
+keep_aspect = 0
+
+[node name="CPUParticles3D_orizontal" type="CPUParticles3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+material_override = ExtResource("1_opv8y")
+mesh = SubResource("QuadMesh_ub74a")
+gravity = Vector3(0, 0, 0)
+
+[node name="CPUParticles3D_vertical" type="CPUParticles3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.203623, 0)
+material_override = ExtResource("2_6h68y")
+mesh = SubResource("QuadMesh_yu8ww")
+emission_shape = 3
+emission_box_extents = Vector3(0.1, 0.1, 0.1)
+gravity = Vector3(0, 1, 0)
+
+[node name="GPUParticles3D_orizontal" type="GPUParticles3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+visible = false
+material_override = SubResource("StandardMaterial3D_cvipg")
+transparency = 1.0
+amount = 1
+process_material = ExtResource("3_g4na3")
+draw_pass_1 = SubResource("QuadMesh_3tif3")
+
+[node name="GPUParticles3D_vertical" type="GPUParticles3D" parent="SubViewportContainer/SubViewport"]
+visible = false
+material_override = SubResource("StandardMaterial3D_pl6gd")
+process_material = ExtResource("4_p3dle")
+draw_pass_1 = SubResource("QuadMesh_h43n5")
